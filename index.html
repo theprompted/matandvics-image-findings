@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MV01 Ad Image Findings — The Prompted</title>
+<style>
+  :root {
+    --bg-page: #F8F8F7;
+    --bg-white: #ffffff;
+    --bg-blue: #EBF9FF;
+    --bg-purple: #F7F1FF;
+    --bg-yellow: #FFFDE7;
+    --bg-green: #E8F5E9;
+    --bg-orange: #FFF3E0;
+    --accent-teal: #53DBC9;
+    --accent-yellow: #FFDE00;
+    --accent-purple: #9D4EDD;
+    --accent-red: #E53935;
+    --accent-orange: #FF9800;
+    --text-dark: #1a1a1a;
+    --text-gray: #4a4a4a;
+    --text-muted: #6b6b6b;
+    --shadow-lg: -0.31rem 0.31rem 0 0 #383838;
+    --shadow-sm: -0.19rem 0.19rem 0 0 #383838;
+    --border: 2px solid black;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg-page); color: var(--text-dark); line-height: 1.55; }
+  h1, h2, h3 { font-family: "SF Mono", "Monaco", "Inconsolata", monospace; line-height: 1.25; }
+  .container { max-width: 880px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  header.hero { background: var(--text-dark); color: #fff; border: var(--border); border-radius: 14px; box-shadow: var(--shadow-lg); padding: 28px 30px; margin-bottom: 36px; }
+  header.hero .tag { display:inline-block; background: var(--accent-teal); color:#000; font-family:"SF Mono",monospace; font-size:12px; font-weight:700; padding:3px 10px; border-radius:99px; border:2px solid #000; margin-bottom:14px; }
+  header.hero h1 { font-size: 24px; color:#fff; }
+  header.hero p { color:#cfcfcf; font-size:14px; margin-top:8px; }
+
+  section { margin-bottom: 30px; }
+  h2 { font-size: 17px; margin-bottom: 14px; display:flex; align-items:center; gap:10px; }
+  h2 .num { background: var(--accent-yellow); border:2px solid #000; border-radius:8px; width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; font-size:14px; box-shadow: var(--shadow-sm); }
+
+  .card { background: var(--bg-white); border: var(--border); border-radius: 12px; box-shadow: var(--shadow-lg); padding: 22px 24px; }
+  .card + .card { margin-top: 16px; }
+  .card p { margin-bottom: 10px; font-size:15px; }
+  .card p:last-child { margin-bottom: 0; }
+
+  .verdict { font-weight:700; }
+  .ok { color:#1b8a3a; }
+  .warn { color:#c2410c; }
+  .bad { color: var(--accent-red); }
+
+  .badge { display:inline-block; padding:3px 11px; border:2px solid #000; border-radius:99px; font-size:12px; font-weight:700; font-family:"SF Mono",monospace; }
+  .b-green { background: var(--bg-green); }
+  .b-orange { background: var(--bg-orange); }
+  .b-blue { background: var(--bg-blue); }
+  .b-purple { background: var(--bg-purple); }
+
+  ul { margin: 6px 0 4px 20px; }
+  li { margin-bottom: 6px; font-size:15px; }
+
+  .callout { background: var(--bg-blue); border:2px solid #000; border-radius:10px; padding:16px 18px; margin:14px 0; box-shadow: var(--shadow-sm); }
+  .callout.green { background: var(--bg-green); }
+  .callout.yellow { background: var(--bg-yellow); }
+
+  code { font-family:"SF Mono",monospace; background:#efefef; border:1px solid #ddd; border-radius:4px; padding:1px 6px; font-size:13px; }
+
+  .divider { border-top: 2px solid #000; margin: 34px 0; }
+
+  .links a { display:block; font-family:"SF Mono",monospace; font-size:13px; margin-bottom:8px; word-break:break-all; color:#0b62c4; }
+
+  footer { font-size:13px; color: var(--text-muted); margin-top:30px; text-align:center; }
+
+  .evidence { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:16px 0; }
+  .evidence figure { margin:0; background:var(--bg-white); border:2px solid #000; border-radius:10px; overflow:hidden; box-shadow: var(--shadow-sm); }
+  .evidence figure img { width:100%; display:block; border-bottom:2px solid #000; }
+  .evidence figcaption { padding:8px 10px; font-size:12.5px; color: var(--text-gray); }
+  .evidence .cap-bad { color: var(--accent-red); font-weight:600; }
+  .evidence .cap-good { color:#1b8a3a; font-weight:600; }
+  @media (max-width:640px) { .evidence { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <span class="tag">FINDINGS · MV01</span>
+    <h1>Why your ad images looked "off" — and the fix</h1>
+    <p>Diagnosis of the image-generation run you sent over. Short version: your prompts and models are fine. Two separate things were making the output look broken, and only one is a real fix.</p>
+  </header>
+
+  <div class="callout green">
+    <p class="verdict ok">The headline: this is mostly a preview problem, not a generation problem.</p>
+    <p style="margin-top:8px; font-size:15px;">The "sliver of a different image on the right edge" that stood out is not baked into your ads. It's the review page placing a small reference thumbnail next to each ad. Your actual generated files are clean, single images.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">1</span> The right-edge "sliver" <span class="badge b-blue">preview only</span></h2>
+    <div class="card">
+      <p>Your <code>ad-review.html</code> shows each concept as a two-part row:</p>
+      <p style="text-align:center; font-family:'SF Mono',monospace; font-size:14px; background:#f4f4f4; border:1px solid #ddd; border-radius:6px; padding:10px;">[ &nbsp;your generated ad&nbsp; | &nbsp;80px swipe reference&nbsp; ]</p>
+      <p>That 80px strip on the right is the <strong>swipe image the concept was modeled on</strong> — added so you can compare generation vs. reference at a glance. Because it sits flush against the ad with no gap, it reads like a foreign sliver got baked into the ad.</p>
+      <p><span class="verdict">It did not.</span> Open any generated <code>.png</code> on its own and the sliver is gone — the file is a clean 1024×1536 single image. The strip only exists inside the review layout.</p>
+      <div class="evidence">
+        <figure>
+          <img src="/evidence/review-card-with-strip.png" alt="review card with swipe strip">
+          <figcaption>In the review page: your ad + an 80px swipe-reference strip (the knit texture on the far right). That strip is the "sliver."</figcaption>
+        </figure>
+        <figure>
+          <img src="/evidence/clean-standalone.png" alt="clean standalone ad">
+          <figcaption>The same ad as a standalone file — no strip, clean single image.</figcaption>
+        </figure>
+      </div>
+      <p><span class="verdict ok">Fix:</span> remove (or visibly separate) the reference column in the review view. Nothing to change in your prompts or generation.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">2</span> Garbled text on some images <span class="badge b-orange">real, already half-solved</span></h2>
+    <div class="card">
+      <p>A separate issue: some images had scrambled German text ("Vanõtionoer", "Slin Stunden", etc.). This is the classic weak-model text-rendering failure.</p>
+      <p>The bundle shows the run cycled through several models — <code>flux/dev</code>, <code>flux/schnell</code>, <code>recraft-v3</code>, <code>ideogram/v2</code> — none of which render legible text, especially German with umlauts. Those produced the garbled <code>800×1280</code> versions.</p>
+      <p>The later <code>gpt-image-1</code> (GPT Image 2) versions at <code>1024×1536</code> render the same headlines <strong>cleanly</strong>. So the fix is already in your own bundle — you just have old weak-model versions still sitting alongside the good ones.</p>
+      <div class="evidence">
+        <figure>
+          <img src="/evidence/text-garbled.png" alt="garbled text from weak model">
+          <figcaption class="cap-bad">Weak model (flux/recraft) — scrambled text: "Vanõtionoer", "J'lïrõkc Fere".</figcaption>
+        </figure>
+        <figure>
+          <img src="/evidence/text-clean.png" alt="clean text from GPT Image 2">
+          <figcaption class="cap-good">GPT Image 2 — same concept, legible: "Verdünnt sich", "Hält Form", "500 Stunden".</figcaption>
+        </figure>
+      </div>
+      <p><span class="verdict ok">Fix:</span> standardize on GPT Image 2 or Nano Banana 2, delete the old flux/recraft variants, and you're done.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">3</span> A note on split-layout concepts <span class="badge b-purple">minor</span></h2>
+    <div class="card">
+      <p>A few concepts ask the model for a "left half / right half / navigation arrow at the right edge" editorial split (e.g. the GESUNDHEIT-HEUTE and AdMedika layouts). The model draws that divider literally, which can look like a seam.</p>
+      <p>Not broken, but if you want cleaner single-focus ads, drop the explicit "right half / right edge" language from those specific prompts. Optional.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section>
+    <h2>What we'd actually do</h2>
+    <div class="card">
+      <ul>
+        <li>Keep your prompts and process — they're working.</li>
+        <li>Generate with <strong>GPT Image 2</strong> or <strong>Nano Banana 2</strong> only. Drop flux / recraft / ideogram for anything with text.</li>
+        <li>Clear out the old weak-model image variants so the review only shows the good ones.</li>
+        <li>Treat the swipe strip in the review page as a reference aid, not part of the ad.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="callout yellow">
+    <p style="font-size:15px;"><strong>Bottom line:</strong> nothing structurally wrong with your setup. One display quirk in the review page, one weak-model leftover. Both easy.</p>
+  </div>
+
+  <footer>The Prompted · MV01 ad image diagnosis</footer>
+
+</div>
+</body>
+</html>
