@@ -38,7 +38,7 @@
   .why p:last-child { margin-bottom: 0; }
   .why code { font-family:"SF Mono",monospace; background:#fff; border:1px solid #999; border-radius:4px; padding:1px 6px; font-size:13px; }
 
-  .fix { background: var(--bg-yellow); border:2px solid #000; border-radius:12px; padding:18px 22px; margin-bottom:28px; box-shadow: var(--shadow-sm); }
+  .fix { background: var(--bg-yellow); border:2px solid #000; border-radius:12px; padding:18px 22px; margin-bottom:36px; box-shadow: var(--shadow-sm); }
   .fix h2 { font-size:15px; margin-bottom:10px; }
   .fix p { font-size:14px; margin-bottom: 10px; }
   .prompt-block { position:relative; background: var(--text-dark); color:#eee; border:2px solid #000; border-radius:8px; padding:16px 18px 16px 18px; font-family:"SF Mono",monospace; font-size:13px; white-space:pre-wrap; word-break:break-word; line-height:1.5; }
@@ -46,31 +46,39 @@
   .copy-btn:hover { transform: translate(-1px,1px); box-shadow: -0.06rem 0.06rem 0 0 #383838; }
   .copy-btn.copied { background: #1b8a3a; color:#fff; }
 
-  .compare { display:grid; grid-template-columns: 1fr 1fr; gap:22px; margin-bottom: 24px; }
-  @media (max-width: 800px) { .compare { grid-template-columns:1fr; } }
-  .col { display:flex; flex-direction:column; }
-  .col-head { font-family:"SF Mono",monospace; font-size:13px; font-weight:700; padding:10px 14px; border:2px solid #000; border-radius:10px 10px 0 0; border-bottom:none; }
-  .col-head .label { display:inline-block; padding:2px 8px; border:2px solid #000; border-radius:99px; font-size:10.5px; margin-right:8px; }
-  .col-bad .col-head { background:#FEE2E2; }
-  .col-bad .col-head .label { background: var(--accent-red); color:#fff; }
-  .col-good .col-head { background: var(--bg-green); }
-  .col-good .col-head .label { background:#1b8a3a; color:#fff; }
-  .grid { background: var(--bg-white); border:2px solid #000; border-top:none; border-radius: 0 0 10px 10px; padding:14px; display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+  /* Spotlight comparison — one big card per side */
+  .spotlight { display:grid; grid-template-columns: 1fr 1fr; gap:22px; margin-bottom: 36px; }
+  @media (max-width: 900px) { .spotlight { grid-template-columns:1fr; } }
+  .spot-col { display:flex; flex-direction:column; }
+  .spot-head { font-family:"SF Mono",monospace; font-size:14px; font-weight:700; padding:12px 16px; border:2px solid #000; border-radius:12px 12px 0 0; border-bottom:none; }
+  .spot-head .label { display:inline-block; padding:3px 10px; border:2px solid #000; border-radius:99px; font-size:11px; margin-right:8px; }
+  .spot-bad .spot-head { background:#FEE2E2; color:#7f1d1d; }
+  .spot-bad .spot-head .label { background: var(--accent-red); color:#fff; }
+  .spot-good .spot-head { background: var(--bg-green); color:#14532d; }
+  .spot-good .spot-head .label { background:#1b8a3a; color:#fff; }
+  .spot-body { background: var(--bg-white); border:2px solid #000; border-top:none; border-radius: 0 0 12px 12px; padding:24px; display:flex; align-items:center; justify-content:center; min-height:520px; }
 
-  /* MESSED UP card: ad + 80px swipe column glued to the right */
-  .card-bad { background:#fff; border-radius:8px; overflow:hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-  .card-bad .imgs { display:grid; grid-template-columns: 1fr 80px; gap:0; }
-  .card-bad .imgs img.gen { width:100%; display:block; object-fit:cover; }
-  .card-bad .imgs .swipe { background:#f5f5f5; }
-  .card-bad .imgs .swipe img { width:100%; height:100%; display:block; object-fit:cover; }
-  .card-bad .meta { padding:8px 10px; font-family:"SF Mono",monospace; font-size:11px; color: var(--text-gray); }
-  .card-bad .meta .id { color:#000; font-weight:700; }
+  /* Big spotlight card showing one ad */
+  .big-card { position:relative; max-width:340px; }
+  .big-card .label-tag { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:#fff; padding:2px 10px; font-family:"SF Mono",monospace; font-size:11px; font-weight:700; border:2px solid #000; border-radius:99px; z-index:2; }
+  .big-card .imgs { display:grid; grid-template-columns: 1fr 80px; gap:0; background:#fff; border:2px solid #000; border-radius:10px; overflow:hidden; box-shadow: var(--shadow-sm); }
+  .big-card .imgs img.gen { width:100%; display:block; }
+  .big-card .imgs .swipe { background:#f5f5f5; position:relative; }
+  .big-card .imgs .swipe::after { content:""; position:absolute; inset:-2px -2px -2px 0; border:3px solid var(--accent-red); border-left:none; border-radius:0 8px 8px 0; pointer-events:none; box-shadow: 0 0 0 2px #fff inset; }
+  .big-card .imgs .swipe img { width:100%; height:100%; display:block; object-fit:cover; }
+  .big-card .single { border:2px solid #000; border-radius:10px; overflow:hidden; box-shadow: var(--shadow-sm); }
+  .big-card .single img { width:100%; display:block; }
+  .big-card .caption { margin-top:14px; text-align:center; font-family:"SF Mono",monospace; font-size:12px; color: var(--text-gray); }
+  .arrow-tag { display:inline-block; margin-top:10px; padding:4px 12px; background:var(--accent-red); color:#fff; font-family:"SF Mono",monospace; font-size:11px; font-weight:700; border:2px solid #000; border-radius:99px; }
 
-  /* CLEAN card: just the ad */
-  .card-good { background:#fff; border-radius:8px; overflow:hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-  .card-good img { width:100%; display:block; }
-  .card-good .meta { padding:8px 10px; font-family:"SF Mono",monospace; font-size:11px; color: var(--text-gray); }
-  .card-good .meta .id { color:#000; font-weight:700; }
+  .gallery-head { font-family:"SF Mono",monospace; font-size:14px; font-weight:700; padding:12px 16px; background:var(--bg-page); border:2px solid #000; border-radius:12px; box-shadow: var(--shadow-sm); margin-bottom:14px; }
+
+  /* Full 20-ad gallery — clean only, larger cards */
+  .gallery { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:16px; }
+  .gallery figure { margin:0; background: var(--bg-white); border:2px solid #000; border-radius:10px; overflow:hidden; box-shadow: var(--shadow-sm); }
+  .gallery figure img { width:100%; display:block; border-bottom:2px solid #000; }
+  .gallery figcaption { padding:8px 10px; font-family:"SF Mono",monospace; font-size:11.5px; color: var(--text-gray); }
+  .gallery figcaption .id { color:#000; font-weight:700; }
 
   footer { font-size:13px; color: var(--text-muted); margin-top:40px; text-align:center; }
   footer a { color:#0b62c4; }
@@ -82,14 +90,14 @@
   <header class="hero">
     <span class="tag">PREVIEW · MV01</span>
     <h1>Same ads. Two ways of previewing them.</h1>
-    <p>Left: how your current review page shows them (with the sliver). Right: same files, no swipe column. The ads were never broken — the preview was.</p>
+    <p>Left: how your current review page shows them (with the sliver outlined in red). Right: same files, no swipe column. The ads were never broken — the preview was.</p>
     <p>Full diagnosis: <a href="./">findings page</a></p>
   </header>
 
   <div class="why">
     <h2>Why the left looks broken</h2>
     <p>The review HTML uses <code>grid-template-columns: 1fr 80px</code> on each card, which paints an 80-pixel reference column of the swipe image directly against the right edge of every generated ad.</p>
-    <p>Because there's no gap, the swipe reference reads like a foreign sliver baked into the ad. It isn't — it's the layout. The ad PNG itself is a clean single image (the right column).</p>
+    <p>Because there's no gap, the swipe reference reads like a foreign sliver baked into the ad. It isn't — it's the layout. The ad PNG itself is a clean single image (the right column below).</p>
   </div>
 
   <div class="fix">
@@ -106,66 +114,73 @@ Specifically:
 Save the file and confirm the change by opening it in a browser. Each card should show the generated ad full-width with no narrow strip on the right.</div>
   </div>
 
-  <div class="compare">
-    <div class="col col-bad">
-      <div class="col-head"><span class="label">BEFORE</span> current review (with swipe strip)</div>
-      <div class="grid" id="grid-bad"></div>
+  <div class="spotlight">
+    <div class="spot-col spot-bad">
+      <div class="spot-head"><span class="label">BEFORE</span> review template (sliver outlined in red)</div>
+      <div class="spot-body">
+        <div class="big-card">
+          <div class="imgs">
+            <img class="gen" src="ads/c16.png" alt="ad">
+            <div class="swipe"><img src="swipe/SCR-20260313-bvmm.jpeg" alt="swipe ref"></div>
+          </div>
+          <div class="caption"><span class="arrow-tag">← THIS 80px STRIP</span><br>The "sliver" is the swipe reference, glued flush to the ad.</div>
+        </div>
+      </div>
     </div>
-    <div class="col col-good">
-      <div class="col-head"><span class="label">AFTER</span> clean preview (no strip)</div>
-      <div class="grid" id="grid-good"></div>
+    <div class="spot-col spot-good">
+      <div class="spot-head"><span class="label">AFTER</span> clean preview (no strip)</div>
+      <div class="spot-body">
+        <div class="big-card">
+          <div class="single">
+            <img src="ads/c16.png" alt="ad">
+          </div>
+          <div class="caption">Same exact file. No strip. No sliver. The ad was always clean.</div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <div class="gallery-head">All 20 ads, clean preview (no strip)</div>
+  <div class="gallery" id="gallery"></div>
 
   <footer>The Prompted · MV01 preview demo</footer>
 </div>
 
 <script>
 const CONCEPTS = [
-  {id:"c01", name:"Problem-Agitate Lifestyle",     swipe:"SCR-20260313-bnre.jpeg"},
-  {id:"c02", name:"Native Advertorial POV Feet",    swipe:"SCR-20260313-bqjq.jpeg"},
-  {id:"c03", name:"Shock-Reframe Close-Up",         swipe:"SCR-20260313-bohi.jpeg"},
-  {id:"c04", name:"Anti-Design Text-Only",          swipe:"SCR-20260313-bjfz.png"},
-  {id:"c05", name:"Myth-Buster Heel",               swipe:"SCR-20260313-bqut.jpeg"},
-  {id:"c06", name:"Side-by-Side Heel Comparison",   swipe:"SCR-20260313-bubh.png"},
-  {id:"c07", name:"Ingredient Heel Versus",         swipe:"SCR-20260313-bomg.png"},
-  {id:"c08", name:"Morning vs Midday Split",        swipe:"SCR-20260313-bjqv.jpeg"},
-  {id:"c09", name:"Elastic Gradient Us-vs-Them",    swipe:"SCR-20260313-blgb.jpeg"},
-  {id:"c10", name:"Whiteboard Elastic Data",        swipe:"SCR-20260313-bksr.jpeg"},
-  {id:"c11", name:"Bathroom Mirror Message",        swipe:"SCR-20260313-btab.jpeg"},
-  {id:"c12", name:"Protest Sign Street Portrait",   swipe:"045465c8-0a0f-48b8-953c-248115b625ab.jpeg"},
-  {id:"c13", name:"Pattern Interrupt Seam Paradox", swipe:"SCR-20260313-bsht.jpeg"},
-  {id:"c14", name:"Seam Migration Editorial",       swipe:"SCR-20260313-btki.png"},
-  {id:"c15", name:"Seminar Presentation Fiber",     swipe:"fb57375a-8f20-4747-80a9-a713b24b832b.jpeg"},
-  {id:"c16", name:"Health Editorial Warm Feet",     swipe:"SCR-20260313-bvmm.jpeg"},
-  {id:"c17", name:"News Advertorial Fiber Exposé",  swipe:"d9375446-1c53-4708-bfab-59a213fd7b13.jpeg"},
-  {id:"c18", name:"Medical Authority Hot Feet",     swipe:"SCR-20260313-bqhj.jpeg"},
-  {id:"c19", name:"Founder Letter Villain",         swipe:"SCR-20260313-biiu.png"},
-  {id:"c20", name:"Testimonial Discovery Coined Term", swipe:"SCR-20260313-brbu.jpeg"},
+  ["c01","Problem-Agitate Lifestyle"],
+  ["c02","Native Advertorial POV Feet"],
+  ["c03","Shock-Reframe Close-Up"],
+  ["c04","Anti-Design Text-Only"],
+  ["c05","Myth-Buster Heel"],
+  ["c06","Side-by-Side Heel Comparison"],
+  ["c07","Ingredient Heel Versus"],
+  ["c08","Morning vs Midday Split"],
+  ["c09","Elastic Gradient Us-vs-Them"],
+  ["c10","Whiteboard Elastic Data"],
+  ["c11","Bathroom Mirror Message"],
+  ["c12","Protest Sign Street Portrait"],
+  ["c13","Pattern Interrupt Seam Paradox"],
+  ["c14","Seam Migration Editorial"],
+  ["c15","Seminar Presentation Fiber"],
+  ["c16","Health Editorial Warm Feet"],
+  ["c17","News Advertorial Fiber Exposé"],
+  ["c18","Medical Authority Hot Feet"],
+  ["c19","Founder Letter Villain"],
+  ["c20","Testimonial Discovery Coined Term"],
 ];
-const badGrid = document.getElementById("grid-bad");
-const goodGrid = document.getElementById("grid-good");
-CONCEPTS.forEach(c => {
-  badGrid.insertAdjacentHTML("beforeend", `
-    <div class="card-bad">
-      <div class="imgs">
-        <img class="gen" src="ads/${c.id}.png" alt="${c.name}" loading="lazy">
-        <div class="swipe"><img src="swipe/${c.swipe}" alt="swipe ref" loading="lazy" onerror="this.style.display='none'"></div>
-      </div>
-      <div class="meta"><span class="id">${c.id}</span> — ${c.name}</div>
-    </div>
-  `);
-  goodGrid.insertAdjacentHTML("beforeend", `
-    <div class="card-good">
-      <img src="ads/${c.id}.png" alt="${c.name}" loading="lazy">
-      <div class="meta"><span class="id">${c.id}</span> — ${c.name}</div>
-    </div>
+const gallery = document.getElementById("gallery");
+CONCEPTS.forEach(([id,name]) => {
+  gallery.insertAdjacentHTML("beforeend", `
+    <figure>
+      <img src="ads/${id}.png" alt="${name}" loading="lazy">
+      <figcaption><span class="id">${id}</span> — ${name}</figcaption>
+    </figure>
   `);
 });
 
 function copyPrompt() {
   const block = document.getElementById("promptBlock");
-  // strip the copy button itself from the text
   const text = block.innerText.replace(/^Copy\s*/, "").trim();
   navigator.clipboard.writeText(text).then(() => {
     const btn = document.getElementById("copyBtn");
